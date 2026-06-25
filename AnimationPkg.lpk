@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="AnimationPkg"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Xelitan.com"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+    </CompilerOptions>
+    <Description Value="TAnimation - a visual component that plays WebP, APNG/PNG and GIF animations. Pure-Pascal decoders (WebP, GIF LZW, DEFLATE/APNG) with no external library dependencies."/>
+    <License Value="MIT"/>
+    <Version Major="0" Minor="2"/>
+    <Files Count="8">
+      <Item1>
+        <Filename Value="AnimationCommon.pas"/>
+        <UnitName Value="AnimationCommon"/>
+      </Item1>
+      <Item2>
+        <Filename Value="Inflate.pas"/>
+        <UnitName Value="Inflate"/>
+      </Item2>
+      <Item3>
+        <Filename Value="BitmapEveryX.pas"/>
+        <UnitName Value="BitmapEveryX"/>
+      </Item3>
+      <Item4>
+        <Filename Value="WebPDec.pas"/>
+        <UnitName Value="WebPDec"/>
+      </Item4>
+      <Item5>
+        <Filename Value="WebPAnimated.pas"/>
+        <UnitName Value="WebPAnimated"/>
+      </Item5>
+      <Item6>
+        <Filename Value="PngAnimated.pas"/>
+        <UnitName Value="PngAnimated"/>
+      </Item6>
+      <Item7>
+        <Filename Value="GifAnimated.pas"/>
+        <UnitName Value="GifAnimated"/>
+      </Item7>
+      <Item8>
+        <Filename Value="Animation.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="Animation"/>
+      </Item8>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
