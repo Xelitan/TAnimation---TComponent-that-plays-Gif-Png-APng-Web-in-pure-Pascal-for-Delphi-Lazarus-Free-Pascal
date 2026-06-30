@@ -1,3 +1,8 @@
+# New name
+
+The component has been renamed to TXelAnimate and is now also available in OPM (Online Package Manager) in Lazarus.
+
+
 # Usage
 
 1. Install AnimationPkg.lpk
