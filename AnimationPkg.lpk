@@ -17,7 +17,7 @@
         </SyntaxOptions>
       </Parsing>
     </CompilerOptions>
-    <Description Value="TAnimation - a visual component that plays WebP, APNG/PNG and GIF animations. Pure-Pascal decoders (WebP, GIF LZW, DEFLATE/APNG) with no external library dependencies."/>
+    <Description Value="TXelAnimate - a visual component that plays WebP, APNG/PNG and GIF animations. Pure-Pascal decoders (WebP, GIF LZW, DEFLATE/APNG) with no external library dependencies."/>
     <License Value="MIT"/>
     <Version Major="0" Minor="2"/>
     <Files Count="8">
@@ -50,9 +50,9 @@
         <UnitName Value="GifAnimated"/>
       </Item7>
       <Item8>
-        <Filename Value="Animation.pas"/>
+        <Filename Value="XelAnimate.pas"/>
         <HasRegisterProc Value="True"/>
-        <UnitName Value="Animation"/>
+        <UnitName Value="XelAnimate"/>
       </Item8>
     </Files>
     <RequiredPkgs Count="1">
