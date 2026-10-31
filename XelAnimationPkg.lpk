@@ -2,7 +2,7 @@
 <CONFIG>
   <Package Version="5">
     <PathDelim Value="\"/>
-    <Name Value="AnimationPkg"/>
+    <Name Value="XelAnimationPkg"/>
     <Type Value="RunAndDesignTime"/>
     <Author Value="Xelitan.com"/>
     <CompilerOptions>
@@ -17,48 +17,35 @@
         </SyntaxOptions>
       </Parsing>
     </CompilerOptions>
-    <Description Value="TXelAnimate - a visual component that plays WebP, APNG/PNG and GIF animations. Pure-Pascal decoders (WebP, GIF LZW, DEFLATE/APNG) with no external library dependencies."/>
+    <Description Value="TXelAnimate - a visual component that plays WebP, APNG/PNG, GIF and AVIF animations. Pure-Pascal decoders (WebP, GIF LZW, DEFLATE/APNG, AV1/AVIF) with no external library dependencies. Please uninstall AnimationPkg if you installed it before."/>
     <License Value="MIT"/>
-    <Version Major="0" Minor="2"/>
-    <Files Count="8">
-      <Item1>
-        <Filename Value="AnimationCommon.pas"/>
-        <UnitName Value="AnimationCommon"/>
-      </Item1>
-      <Item2>
+    <Version Major="1"/>
+    <Files>
+      <Item>
         <Filename Value="Inflate.pas"/>
         <UnitName Value="Inflate"/>
-      </Item2>
-      <Item3>
-        <Filename Value="BitmapEveryX.pas"/>
-        <UnitName Value="BitmapEveryX"/>
-      </Item3>
-      <Item4>
-        <Filename Value="WebPDec.pas"/>
-        <UnitName Value="WebPDec"/>
-      </Item4>
-      <Item5>
-        <Filename Value="WebPAnimated.pas"/>
-        <UnitName Value="WebPAnimated"/>
-      </Item5>
-      <Item6>
+      </Item>
+      <Item>
         <Filename Value="PngAnimated.pas"/>
         <UnitName Value="PngAnimated"/>
-      </Item6>
-      <Item7>
+      </Item>
+      <Item>
         <Filename Value="GifAnimated.pas"/>
         <UnitName Value="GifAnimated"/>
-      </Item7>
-      <Item8>
+      </Item>
+      <Item>
         <Filename Value="XelAnimate.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="XelAnimate"/>
-      </Item8>
+      </Item>
     </Files>
-    <RequiredPkgs Count="1">
-      <Item1>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="XelImageFormats"/>
+      </Item>
+      <Item>
         <PackageName Value="LCL"/>
-      </Item1>
+      </Item>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

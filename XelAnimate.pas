@@ -4,9 +4,9 @@ unit XelAnimate;
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-// Description:	Visual component that plays WebP, APNG/PNG and GIF animations //
-// Version:	0.2                                                           //
-// Date:	25-JUN-2026                                                   //
+// Description:	Visual component: WebP, APNG/PNG, GIF and AVIF animations     //
+// Version:	0.4                                                           //
+// Date:	31-OCT-2026                                                   //
 // License:     MIT                                                           //
 // Target:	Win64, Free Pascal, Delphi                                    //
 // Copyright:	(c) 2026 Xelitan.com.                                         //
@@ -14,12 +14,13 @@ unit XelAnimate;
 //                                                                            //
 // Drop a TXelAnimate on a form, set FileName (or call LoadFromFile /          //
 // LoadFromStream at run time) and it auto-detects the format (WebP, animated //
-// PNG/APNG or GIF), decodes it and plays the animation, honouring per-frame  //
-// durations and the loop count.                                              //
+// PNG/APNG, GIF or AVIF image sequence), decodes it and plays the animation, //
+// honouring per-frame durations and the loop count.                          //
 //                                                                            //
 //   Animation1.LoadFromFile('anim.webp');   // AutoPlay starts it            //
 //   Animation1.LoadFromFile('anim.png');    // APNG                          //
 //   Animation1.LoadFromFile('anim.gif');    // GIF                           //
+//   Animation1.LoadFromFile('anim.avif');   // AVIF image sequence           //
 //   Animation1.Play;  Animation1.Stop;  Animation1.Pause;                    //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,10 +29,10 @@ interface
 
 uses
   Classes, SysUtils, Graphics, Controls, ExtCtrls,
-  AnimationCommon, WebPAnimated, PngAnimated, GifAnimated;
+  AnimationCommon, WebPAnimated, PngAnimated, GifAnimated, AvifAnimated;
 
 type
-  TAnimFormat = (afUnknown, afWebP, afPng, afGif);
+  TAnimFormat = (afUnknown, afWebP, afPng, afGif, afAvif);
 
   { TXelAnimate }
   TXelAnimate = class(TGraphicControl)
@@ -41,6 +42,7 @@ type
     FFrameIndex:  Integer;
     FPlaying:     Boolean;
     FAutoPlay:    Boolean;
+    FLoop:        Boolean;
     FStretch:     Boolean;
     FCenter:      Boolean;
     FLoopsDone:   Integer;
@@ -81,6 +83,8 @@ type
     // When True the control resizes itself to the animation's pixel size.
     property AutoSize default True;
     property AutoPlay:  Boolean read FAutoPlay  write FAutoPlay  default True;
+    // True: loop forever, ignoring the loop count stored in the file.
+    property Loop:      Boolean read FLoop      write FLoop      default False;
     property Stretch:   Boolean read FStretch   write SetStretch default False;
     property Center:    Boolean read FCenter    write SetCenter  default True;
     // Fired after each frame is shown / when one full loop finishes.
@@ -140,6 +144,10 @@ begin
      (hdr[8] = Ord('W')) and (hdr[9] = Ord('E')) and
      (hdr[10] = Ord('B')) and (hdr[11] = Ord('P')) then
     Exit(afWebP);
+  // AVIF (ISOBMFF): "....ftyp"; the decoder checks for an image sequence
+  if (hdr[4] = Ord('f')) and (hdr[5] = Ord('t')) and
+     (hdr[6] = Ord('y')) and (hdr[7] = Ord('p')) then
+    Exit(afAvif);
 end;
 
 constructor TXelAnimate.Create(AOwner: TComponent);
@@ -152,6 +160,7 @@ begin
   FFrameIndex := 0;
   FPlaying    := False;
   FAutoPlay   := True;
+  FLoop       := False;
   FStretch    := False;
   FCenter     := True;
   FLoopsDone  := 0;
@@ -173,6 +182,7 @@ begin
     afWebP: FAnim := TWebPAnimation.Create;
     afPng:  FAnim := TPngAnimation.Create;
     afGif:  FAnim := TGifAnimation.Create;
+    afAvif: FAnim := TAvifAnimation.Create;
   else
     raise EInvalidGraphic.Create('TXelAnimate: unrecognised image format');
   end;
@@ -340,7 +350,7 @@ begin
     Inc(FLoopsDone);
     if Assigned(FOnComplete) then FOnComplete(Self);
     // LoopCount = 0 means loop forever; otherwise stop after that many loops.
-    if (FAnim.LoopCount > 0) and (FLoopsDone >= FAnim.LoopCount) then
+    if not FLoop and (FAnim.LoopCount > 0) and (FLoopsDone >= FAnim.LoopCount) then
     begin
       FPlaying := False;
       Exit;
